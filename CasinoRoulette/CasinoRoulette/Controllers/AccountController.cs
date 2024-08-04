@@ -52,8 +52,18 @@ public class AccountController : ControllerBase
             return Unauthorized("Invalid or expired refresh token");
         }
         return Ok(tokens);
-
-
+    }
+    
+    [AllowAnonymous]
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetDataPlayer(int id)
+    {
+        var dataPlayer =await _accountService.GetDataPlayerById(id);
+        if (dataPlayer == null)
+        {
+            return Unauthorized("player not found");
+        }
+        return Ok(dataPlayer);
     }
     
     

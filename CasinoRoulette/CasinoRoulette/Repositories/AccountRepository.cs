@@ -9,6 +9,7 @@ public interface IAccountRepository
     Task SaveChanges();
     Task<Player> GetPlayerByRefreshToken(string refreshToken);
     Task<Player> GetPlayerByLogin(string login);
+    Task<Player> GetPlayerById(int playerId);
 }
 
 public class AccountRepository :IAccountRepository
@@ -35,6 +36,11 @@ public class AccountRepository :IAccountRepository
     public async Task<Player> GetPlayerByLogin(string login)
     {
         return _context.Players.FirstOrDefault(u => u.Login == login);
+    }
+
+    public async Task<Player> GetPlayerById(int playerId)
+    {
+        return _context.Players.FirstOrDefault(p => p.PlayerId == playerId);
     }
 
     

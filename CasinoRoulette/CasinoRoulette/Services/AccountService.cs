@@ -16,6 +16,7 @@ public interface IAccountService
     Task<TokensDto> LoginPlayer(LoginDto loginRequest);
 
     Task<TokensDto> RefreshTokenPlayer(RefreshTokenRequest refreshToken);
+    Task<DataPlayerDto> GetDataPlayerById(int playedId);
 }
 
 public class AccountService : IAccountService
@@ -140,6 +141,31 @@ public class AccountService : IAccountService
         AccessToken = new JwtSecurityTokenHandler().WriteToken(jwtToken),
         RefreshToken = user.RefreshToken
         };
-}
+    }
+
+    public async Task<DataPlayerDto> GetDataPlayerById(int playerId)
+    {
+        var player =await _accountRepository.GetPlayerById(playerId);
+        if (!PlayerExists(player))
+        {
+            throw new Exception("player doesn't exists");
+        }
+        var dataPlayer = new DataPlayerDto()
+        {
+            FirstName = player.FirstName,
+            LastName = player.LastName,
+            AccountBalance = player.AccountBalance
+        };
+        return dataPlayer;
+    }
+    private static bool PlayerExists(Player? player)
+    {
+        if (player != null)
+        {
+            return true;
+        }
+
+        return false;
+    }
     
 }

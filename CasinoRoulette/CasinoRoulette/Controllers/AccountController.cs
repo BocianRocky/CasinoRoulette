@@ -1,4 +1,5 @@
 ﻿
+using System.Security.Claims;
 using CasinoRoulette.DTO;
 using CasinoRoulette.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -56,9 +57,27 @@ public class AccountController : ControllerBase
     
     [AllowAnonymous]
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetDataPlayer(int id)
+    public async Task<IActionResult> GetDataPlayerById(int id)
     {
         var dataPlayer =await _accountService.GetDataPlayerById(id);
+        if (dataPlayer == null)
+        {
+            return Unauthorized("player not found");
+        }
+        return Ok(dataPlayer);
+    }
+
+    [Authorize]
+    [HttpGet("data")]
+    public async Task<IActionResult> GetDataPlayerByAT()
+    {
+        var playerIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+        if (playerIdClaim == null || !int.TryParse(playerIdClaim, out int playerId))
+        {
+            return Unauthorized("user ID claim is missing or invalid");
+        }
+        var dataPlayer =await _accountService.GetDataPlayerById(playerId);
         if (dataPlayer == null)
         {
             return Unauthorized("player not found");

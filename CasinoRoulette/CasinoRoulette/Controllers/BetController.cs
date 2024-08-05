@@ -20,7 +20,7 @@ public class BetController : ControllerBase
     }
     
          [Authorize]
-         [HttpPost("results")]
+         [HttpPut("results")]
          public async Task<IActionResult> AssignBetResults([FromBody] RouletteResultDto resultDto)
          {
              if(!await _betService.AssignBetResults(resultDto))

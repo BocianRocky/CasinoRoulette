@@ -26,4 +26,12 @@ public class SpinController : ControllerBase
         }
         return Ok(spin);
     }
+
+    [Authorize]
+    [HttpGet("nums")]
+    public async Task<IActionResult> GetHotAndColdNumbers()
+    {
+        var nums=await _spinService.GetHotAndColdNumberFromSpins();
+        return Ok(nums);
+    }
 }

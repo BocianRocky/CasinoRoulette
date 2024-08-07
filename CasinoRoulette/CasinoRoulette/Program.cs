@@ -5,18 +5,18 @@ using CasinoRoulette.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
+
 public class Program
 {
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddControllers();
         builder.Services.AddDbContext<MasterContext>();
-        
+
         
         builder.Services.AddScoped<ISpinService, SpinService>();
         builder.Services.AddScoped<ISpinRepository, SpinRepository>();
@@ -26,14 +26,12 @@ public class Program
         builder.Services.AddScoped<IBetRepository, BetRepository>();
         builder.Services.AddScoped<IAccountService, AccountService>();
         builder.Services.AddScoped<IAccountRepository, AccountRepository>();
-        
-        
-        
 
+        
         var secretKey = builder.Configuration["SecretKey"];
         if (string.IsNullOrEmpty(secretKey) || secretKey.Length < 32)
         {
-            throw new ArgumentException("SecretKey is not configured or is too long");
+            throw new ArgumentException("SecretKey is not configured or is too short");
         }
 
         var key = Encoding.UTF8.GetBytes(secretKey);
@@ -81,6 +79,15 @@ public class Program
         });
 
         var app = builder.Build();
+
+        //konfiguracja CORS
+        //frontend
+        app.UseCors(policy =>
+        {
+            policy.WithOrigins("http://localhost:3000") 
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        });
 
         if (app.Environment.IsDevelopment())
         {

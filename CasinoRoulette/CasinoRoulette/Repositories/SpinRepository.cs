@@ -9,6 +9,7 @@ public interface ISpinRepository
     Task AddSpin(Spin spin);
     Task SaveChanges();
     Task<Spin> GetSpin(int spinId);
+    Task<List<int>> GetWinnerNumbers();
 }
 public class SpinRepository : ISpinRepository
 {
@@ -32,6 +33,14 @@ public class SpinRepository : ISpinRepository
     public async Task<Spin> GetSpin(int spinId)
     {
         return await _context.Spins.FirstOrDefaultAsync(s => s.SpinId == spinId);
+    }
+
+    public async Task<List<int>> GetWinnerNumbers()
+    {
+        return await _context.Spins.GroupBy(nw => nw.NumberWinner)
+            .OrderByDescending(g => g.Count()).Select(g => g.Key)
+            .Where(nw=>nw.HasValue).Select(nw=>nw.Value)
+            .ToListAsync();
     }
     
     

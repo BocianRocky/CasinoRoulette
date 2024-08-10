@@ -6,7 +6,7 @@ namespace CasinoRoulette.Repositories;
 
 public interface IBetRepository
 {
-    Task<List<Bet>> GetBetsFromSpin(int spinId);
+    Task<List<Bet>> GetBetsFromSpinAndPlayer(int spinId, int playerId);
     Task<Bet> FindBet(List<Bet> playerBets, int betId);
     Task SaveChanges();
     Task<Player> GetPlayerById(int playerId);
@@ -24,10 +24,10 @@ public class BetRepository : IBetRepository
         _context = context;
     }
 
-    public async Task<List<Bet>> GetBetsFromSpin(int spinId)
+    public async Task<List<Bet>> GetBetsFromSpinAndPlayer(int spinId, int playerId)
     {
         var playerBets = await _context.Bets
-            .Where(s => s.SpinId == spinId)
+            .Where(s => s.SpinId == spinId && s.PlayerId==playerId)
             .Include(b => b.BetNumbers)
             .ToListAsync();
         return playerBets;

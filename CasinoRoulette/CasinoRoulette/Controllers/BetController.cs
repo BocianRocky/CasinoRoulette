@@ -23,12 +23,20 @@ public class BetController : ControllerBase
          [HttpPut("results")]
          public async Task<IActionResult> AssignBetResults([FromBody] RouletteResultDto resultDto)
          {
-             if(!await _betService.AssignBetResults(resultDto))
+             var playerIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+             if (playerIdClaim == null || !int.TryParse(playerIdClaim, out int playerId))
+             {
+                 return Unauthorized("user ID claim is missing or invalid");
+             }
+
+             var AmountWon = await _betService.AssignBetResults(resultDto, playerId);
+             if(AmountWon == null)
              {
                  return BadRequest("Failed to assign bet results");
              }
      
-             return Ok();
+             return Ok(AmountWon);
          }
     
     [Authorize]

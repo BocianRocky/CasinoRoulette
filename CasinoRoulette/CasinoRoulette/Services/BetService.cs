@@ -7,7 +7,7 @@ namespace CasinoRoulette.Services;
 
 public interface IBetService
 {
-    Task<bool> AssignBetResults(RouletteResultDto resultDto);
+    Task<AmountWonDto> AssignBetResults(RouletteResultDto resultDto, int playerId);
     Task<int> CreateBet(BetDto betDto, int playerId);
 }
 
@@ -15,11 +15,13 @@ public class BetService : IBetService
 {
     private readonly ISpinRepository _spinRepository;
     private readonly IBetRepository _betRepository;
+    private readonly IAccountRepository _accountRepository;
 
-    public BetService(ISpinRepository spinRepository, IBetRepository betRepository)
+    public BetService(ISpinRepository spinRepository, IBetRepository betRepository, IAccountRepository accountRepository)
     {
         _spinRepository = spinRepository;
         _betRepository = betRepository;
+        _accountRepository = accountRepository;
     }
     
     public async Task<int> CreateBet(BetDto betDto,int playerId)
@@ -75,24 +77,30 @@ public class BetService : IBetService
     
     
 
-    public async Task<bool> AssignBetResults(RouletteResultDto resultDto)
+    public async Task<AmountWonDto> AssignBetResults(RouletteResultDto resultDto, int playerId)
     {
+        decimal amountWon = 0;
         var spin = await _spinRepository.GetSpin(resultDto.SpinId);
+        
         if (!SpinExists(spin))
         {
-            return false;
+            throw new Exception("Spin doesn't exists");
         }
+        var player = await _accountRepository.GetPlayerById(playerId);
+        if (!PlayerExists(player))
+        {
+            throw new Exception("Player doesn't exists");
+        }
+        
         spin.NumberWinner = resultDto.numWinner;
 
-        var playerBets = await _betRepository.GetBetsFromSpin(spin.SpinId);
+        var playerBets = await _betRepository.GetBetsFromSpinAndPlayer(spin.SpinId, player.PlayerId);
              
         var betWithNumbers = playerBets.Select(bet => new BetWithNumbersDto()
         {
             BetId = bet.BetId,
             BetNumbers = bet.BetNumbers.Select(n => n.Number).ToList()
         }).ToList();
-             
-        var playerUpdates = new Dictionary<int, decimal>();
              
         foreach (var currBet in betWithNumbers)
         {
@@ -102,35 +110,28 @@ public class BetService : IBetService
             {
                 continue;
             }
+            
              
             if (currBet.BetNumbers.Contains(spin.NumberWinner))
             {
                 bet.Result = 1;
-                if (!playerUpdates.ContainsKey(bet.PlayerId))
-                {
-                    playerUpdates[bet.PlayerId] = 0;
-                }
-             
-                playerUpdates[bet.PlayerId] += CalculateByBetType(bet.BetAmount,bet.BetType);  
+                amountWon+=CalculateByBetType(bet.BetAmount,bet.BetType);  
             }
             else
             {
                 bet.Result = 0;
             }
         }
-             
-        foreach (var update in playerUpdates)
-        {
-            var player =await  _betRepository.GetPlayerById(update.Key);
-            if (PlayerExists(player))
-            {
-                player.AccountBalance += update.Value;
-            }
-        }
 
+        player.AccountBalance += amountWon;
+        var win = new AmountWonDto()
+        {
+            AmountWon = amountWon
+        };
+        
         await _betRepository.SaveChanges();
 
-        return true;
+        return win;
     }
     
 

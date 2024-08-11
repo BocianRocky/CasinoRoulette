@@ -84,6 +84,18 @@ public class AccountController : ControllerBase
         }
         return Ok(dataPlayer);
     }
+    [Authorize]
+    [HttpGet("balance")]
+    public async Task<IActionResult> GetAccountBalance()
+    {
+        var playerIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+        if (playerIdClaim == null || !int.TryParse(playerIdClaim, out int playerId))
+        {
+            return Unauthorized("user ID claim is missing or invalid");
+        }
+        var accountBalance =await _accountService.GetAccountBalanceById(playerId);
+        return Ok(accountBalance);
+    }
     
     
 }

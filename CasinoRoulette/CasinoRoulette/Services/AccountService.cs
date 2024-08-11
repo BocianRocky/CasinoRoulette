@@ -17,6 +17,7 @@ public interface IAccountService
 
     Task<TokensDto> RefreshTokenPlayer(RefreshTokenRequest refreshToken);
     Task<DataPlayerDto> GetDataPlayerById(int playedId);
+    Task<AccountBalanceDto> GetAccountBalanceById(int playerId);
 }
 
 public class AccountService : IAccountService
@@ -158,6 +159,17 @@ public class AccountService : IAccountService
         };
         return dataPlayer;
     }
+
+    public async Task<AccountBalanceDto> GetAccountBalanceById(int playerId)
+    {
+        var player =await _accountRepository.GetPlayerById(playerId);
+        var accountBalance = new AccountBalanceDto()
+        {
+            AccountBalance = player.AccountBalance
+        };
+        return accountBalance;
+    }
+    
     private static bool PlayerExists(Player? player)
     {
         if (player != null)

@@ -50,7 +50,7 @@ public class BetController : ControllerBase
             return Unauthorized("user ID claim is missing or invalid");
         }
 
-        var betId = _betService.CreateBet(betDto, playerId);
+        var betId =await _betService.CreateBet(betDto, playerId);
         if (betId == null)
         {
             return NotFound("bet is not exists");

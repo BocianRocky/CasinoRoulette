@@ -58,6 +58,21 @@ public class BetController : ControllerBase
 
         return Ok(new { BetId = betId });
     }
+
+    [Authorize]
+    [HttpDelete("{spinId}")]
+    public async Task<IActionResult> DeleteBets(int spinId)
+    {
+        var playerIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+        if (playerIdClaim == null || !int.TryParse(playerIdClaim, out int playerId))
+        {
+            return Unauthorized("user ID claim is missing or invalid");
+        }
+
+        await _betService.DeleteBetsFromSpinAndPlayer(spinId, playerId);
+        return Ok();
+    }
     
     
 }

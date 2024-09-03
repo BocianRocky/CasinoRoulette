@@ -9,6 +9,7 @@ public interface IBetService
 {
     Task<AmountWonDto> AssignBetResults(RouletteResultDto resultDto, int playerId);
     Task<int> CreateBet(BetDto betDto, int playerId);
+    Task<bool> DeleteBetsFromSpinAndPlayer(int spinId, int playerId);
 }
 
 public class BetService : IBetService
@@ -132,6 +133,16 @@ public class BetService : IBetService
         await _betRepository.SaveChanges();
 
         return win;
+    }
+
+    public async Task<bool> DeleteBetsFromSpinAndPlayer(int spinId, int playerId)
+    {
+        var bets =await _spinRepository.GetBetsFromSpinAndPlayer(spinId, playerId);
+        var numbersToRemove = await _betRepository.FindNumbersFromBet(bets);
+        await _betRepository.RemoveNumbers(numbersToRemove);
+        await _betRepository.SaveChanges();
+        
+        return true;
     }
     
 

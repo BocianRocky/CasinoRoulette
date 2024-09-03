@@ -10,6 +10,7 @@ public interface ISpinRepository
     Task SaveChanges();
     Task<Spin> GetSpin(int spinId);
     Task<List<int>> GetWinnerNumbers();
+    Task<List<int>> GetBetsFromSpinAndPlayer(int spinId, int playerId);
 }
 public class SpinRepository : ISpinRepository
 {
@@ -42,6 +43,13 @@ public class SpinRepository : ISpinRepository
             .Where(nw=>nw.HasValue).Select(nw=>nw.Value)
             .ToListAsync();
     }
+
+    public async Task<List<int>>GetBetsFromSpinAndPlayer(int spinId, int playerId)
+    {
+        return await _context.Bets.Where(sp => sp.SpinId == spinId && sp.PlayerId == playerId)
+            .Select(b=>b.BetId).ToListAsync();
+    }
+    
     
     
     

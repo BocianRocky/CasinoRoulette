@@ -13,6 +13,8 @@ public interface IBetRepository
     Task<bool> GameExists(int gameId);
     Task AddBet(Bet bet);
     Task AddBetNumber(BetNumber betNum);
+    Task<List<BetNumber>> FindNumbersFromBet(List<int> betsId);
+    Task RemoveNumbers(List<BetNumber> betNumbers);
 }
 
 public class BetRepository : IBetRepository
@@ -59,6 +61,16 @@ public class BetRepository : IBetRepository
     public async Task AddBetNumber(BetNumber betNum)
     {
         _context.BetNumbers.Add(betNum);
+    }
+
+    public async Task<List<BetNumber>> FindNumbersFromBet(List<int> betsId)
+    {
+        return await _context.BetNumbers.Where(b => betsId.Contains(b.BetId)).ToListAsync();
+    }
+
+    public async Task RemoveNumbers(List<BetNumber> betNumbers)
+    {
+        _context.BetNumbers.RemoveRange(betNumbers);
     }
 
     

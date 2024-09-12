@@ -1,0 +1,96 @@
+.payment-background {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: linear-gradient(#080b10, #022a1c);
+}
+.payment-box {
+    width: 400px;
+    padding: 50px 120px;
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+}
+.payment-box h1{
+    margin: 0 0 40px;
+    color: #fff;
+    text-align: center;
+}
+.elements form{
+    display: flex;
+    flex-direction: column; /* Ustawia elementy w kolumnie */
+    justify-content: center; /* Wyśrodkowanie pionowe */
+    align-items: center; /* Wyśrodkowanie poziome */
+    height: 100%;
+}
+.elements input {
+    
+    padding: 10px 4px;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 10px;
+    outline: none;
+    background: transparent;
+    text-align: center;
+}
+.elements form button{
+    position: relative;
+    display: inline-block;
+    padding: 10px 5px;
+    color: #60987e;
+    font-size: 16px;
+    background: transparent;
+    border: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: 0.5s;
+    letter-spacing: 4px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.elements form button:hover {
+    box-shadow: 0 0.6em 0.5em -0.4em #2a6147;
+    transform: translateY(-0.25em);
+    color:#fff;
+    background: #2a6147;
+}
+.elements form select {
+    position: relative;
+    display: inline-block;
+    padding: 10px 5px;
+    color: #60987e;
+    font-size: 16px;
+    background: transparent;
+    border: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: 0.5s;
+    cursor: pointer;
+    margin-bottom: 10px;
+    appearance: none; 
+    -webkit-appearance: none; 
+    -moz-appearance: none; 
+    border-bottom: 2px solid #60987e; 
+}
+.elements form select:hover {
+    box-shadow: 0 0.6em 0.5em -0.4em #2a6147;
+    
+    color: #fff;
+    background: #2a6147;
+}
+
+.elements form select option {
+    background-color: #2a6147;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 10px;
+}
+.response-info{
+    font-size: 15px;
+    margin-top: 20px;
+    color: #fff;
+    text-align: center;
+}

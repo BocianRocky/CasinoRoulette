@@ -1,0 +1,53 @@
+.tape-container {
+  width: 490px; 
+  overflow: hidden;
+  position: relative;
+  border: 4px solid #000000;
+}
+
+.tape {
+  display: flex;
+  width: fit-content;
+  position: relative;
+}
+
+.tape-item {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  color: #fff;
+}
+
+.red-background {
+  background-color: red;
+}
+
+.black-background {
+  background-color: black;
+}
+
+.green-background {
+  background-color: green;
+}
+
+
+.line {
+  position: absolute;
+  width: 70px; 
+  height: 6px;
+  background-color: yellow;
+  z-index: 10;
+  left: 50%; 
+  transform: translateX(-50%); 
+}
+
+.line-top {
+  top: calc(50% - 40px); 
+}
+
+.line-bottom {
+  top: calc(50% + 34px); 
+}

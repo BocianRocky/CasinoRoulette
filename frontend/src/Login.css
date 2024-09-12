@@ -1,0 +1,96 @@
+html {
+    height: 100%;
+}
+
+.login-background {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: linear-gradient(#080b10, #022a1c);
+}
+
+.login-box {
+    width: 400px;
+    padding: 50px 120px;
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+}
+
+.login-box h1 {
+    margin: 0 0 40px;
+    color: #fff;
+    text-align: center;
+}
+
+
+.login-box .login input {
+    width: 100%;
+    padding: 10px 4px;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 30px;
+    outline: none;
+    background: transparent;
+}
+
+.login-box form button {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    color: #60987e;
+    font-size: 16px;
+    background: transparent;
+    border: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: 0.5s;
+    letter-spacing: 4px;
+    cursor: pointer;
+}
+
+.login-box form button:hover {
+    box-shadow: 0 0.6em 0.5em -0.4em #2a6147;
+  transform: translateY(-0.25em);
+  color:#fff;
+  background: #2a6147;
+}
+
+.error {
+    color: #ff4d4d;
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.register-button {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    color: #60987e;
+    font-size: 16px;
+    background: transparent;
+    border: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: 0.5s;
+    letter-spacing: 4px;
+    cursor: pointer;
+}
+
+.register-button:hover {
+    box-shadow: 0 0.6em 0.5em -0.4em #2a6147;
+  transform: translateY(-0.25em);
+  color:#fff;
+  background: #2a6147;
+}

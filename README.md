@@ -10,7 +10,7 @@ This application is a complete simulation of roulette, designed for play in a vi
 
 ## Gameplay
 
-Players can choose chips with denominations of **5, 10, 50, 100, and 200**. Bets can be placed in various ways, including:
+Players can choose chips with denominations of **5, 10, 20, 50, 100, and 200**. Bets can be placed in various ways, including:
 
 - **Straight Up**: A bet on a single number.
 - **Split**: A bet on two adjacent numbers.

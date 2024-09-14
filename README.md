@@ -26,3 +26,12 @@ Additionally, the application allows betting on:
 - **Ranges of Numbers (1-18, 19-36)**
 
 After the betting phase is complete, a number is drawn and the result is displayed on the screen.
+
+## Features
+
+The application offers the following features:
+
+- **Deposits and Withdrawals**: Tracking account balance, making deposits, and monitoring funds.
+- **Registration and Login**: Allowing users to register new accounts and log into existing ones.
+- **Betting on Roulette**: The ability to place various types of bets on roulette, including Straight Up, Split, Street, Corner, Six Line, as well as bets on colors, even/odd numbers, and number ranges.
+- **Result Analysis**: "Hot Numbers" (frequently drawn) and "Cold Numbers" (rarely drawn).

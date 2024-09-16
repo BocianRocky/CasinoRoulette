@@ -35,3 +35,18 @@ The application offers the following features:
 - **Registration and Login**: Allowing users to register new accounts and log into existing ones.
 - **Betting on Roulette**: The ability to place various types of bets on roulette, including Straight Up, Split, Street, Corner, Six Line, as well as bets on colors, even/odd numbers, and number ranges.
 - **Result Analysis**: "Hot Numbers" (frequently drawn) and "Cold Numbers" (rarely drawn).
+
+## Technologies Used
+
+### Backend
+- **ASP.NET Core 8.0**
+- **Entity Framework Core 8.0 (Database First)**
+- **MSSQL Server**
+- **JWT** (JSON Web Tokens)
+
+### Frontend
+- **React**
+- **React Router** (for SPA navigation)
+- **Axios**
+- **JavaScript**
+- **CSS**  

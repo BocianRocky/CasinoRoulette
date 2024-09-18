@@ -26,6 +26,10 @@ public class Program
         builder.Services.AddScoped<IBetRepository, BetRepository>();
         builder.Services.AddScoped<IAccountService, AccountService>();
         builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+        
+        builder.Services.AddScoped<IAdminService, AdminService>();
+        builder.Services.AddScoped<IAdminRepository, AdminRepository>();
+        
 
         
         var secretKey = builder.Configuration["SecretKey"];
